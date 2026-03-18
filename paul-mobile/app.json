@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "paul-mobile",
-    "slug": "paul-mobile",
+    "name": "PAUL",
+    "slug": "PAUL",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "paulmobile",
+    "scheme": "paul",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {

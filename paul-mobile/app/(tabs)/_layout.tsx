@@ -7,56 +7,65 @@ import { Colors } from "@/constants/theme";
 import { useColorScheme } from "@/hooks/use-color-scheme";
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
+    const colorScheme = useColorScheme();
 
-  return (
-    <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
-        headerShown: false,
-        tabBarButton: HapticTab,
-      }}
-    >
-      <Tabs.Screen
-        name="dashboard"
-        options={{
-          title: "Dashboard",
-          tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name="house.fill" color={color} />
-          ),
-        }}
-      />
+    return (
+        <Tabs
+            screenOptions={{
+                tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
+                headerShown: false,
+                tabBarButton: HapticTab,
+            }}
+        >
+            <Tabs.Screen
+                name="dashboard"
+                options={{
+                    title: "Dashboard",
+                    tabBarIcon: ({ color }) => (
+                        <IconSymbol size={28} name="house.fill" color={color} />
+                    ),
+                }}
+            />
 
-      <Tabs.Screen
-        name="medications"
-        options={{
-          title: "Meds",
-          tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name="pills.fill" color={color} />
-          ),
-        }}
-      />
+            <Tabs.Screen
+                name="medications"
+                options={{
+                    title: "Meds",
+                    tabBarIcon: ({ color }) => (
+                        <IconSymbol size={28} name="pills.fill" color={color} />
+                    ),
+                }}
+            />
 
-      <Tabs.Screen
-        name="reminders"
-        options={{
-          title: "Reminders",
-          tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name="bell.fill" color={color} />
-          ),
-        }}
-      />
+            <Tabs.Screen
+                name="reminders"
+                options={{
+                    title: "Reminders",
+                    tabBarIcon: ({ color }) => (
+                        <IconSymbol size={28} name="bell.fill" color={color} />
+                    ),
+                }}
+            />
 
-      {/* ✅ Replace Explore with Symptoms */}
-      <Tabs.Screen
-        name="symptoms"
-        options={{
-          title: "Symptoms",
-          tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name="waveform.path.ecg" color={color} />
-          ),
-        }}
-      />
-    </Tabs>
-  );
+            <Tabs.Screen
+                name="symptoms"
+                options={{
+                    title: "Symptoms",
+                    tabBarIcon: ({ color }) => (
+                        <IconSymbol size={28} name="waveform.path.ecg" color={color} />
+                    ),
+                }}
+            />
+
+            <Tabs.Screen
+                name="history"
+                options={{
+                    title: "History",
+                    tabBarIcon: ({ color }) => (
+                        <IconSymbol size={28} name="calendar" color={color} />
+                    ),
+                }}
+            />
+        </Tabs>
+    );
 }

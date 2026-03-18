@@ -5,66 +5,112 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { apiFetch } from "../lib/api";
 
 export default function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
 
-  async function login() {
-    try {
-      const data = await apiFetch("/api/auth/login", {
-        method: "POST",
-        body: JSON.stringify({ email, password }),
-      });
+    async function login() {
+        try {
+            setError("");
 
-      await AsyncStorage.setItem("token", data.token);
-      await AsyncStorage.setItem("email", data.email);
-      await AsyncStorage.setItem("role", data.role);
+            if (!email.trim() || !password.trim()) {
+                setError("Please enter your email and password.");
+                return;
+            }
 
-      // 🔥 IMPORTANT FIX
-      router.replace("/(tabs)/dashboard");
+            const data = await apiFetch("/api/auth/login", {
+                method: "POST",
+                body: JSON.stringify({
+                    email: email.trim(),
+                    password,
+                }),
+            });
 
-    } catch (e: any) {
-      setError(e.message);
+            await AsyncStorage.setItem("token", data.token);
+            await AsyncStorage.setItem("email", data.email);
+            await AsyncStorage.setItem("role", data.role);
+
+            router.replace("/dashboard");
+        } catch (e: any) {
+            setError(e.message || "Login failed.");
+        }
     }
-  }
 
-  return (
-    <View style={{ padding: 20, gap: 15 }}>
-      <Text style={{ fontSize: 24, fontWeight: "700" }}>Login</Text>
+    return (
+        <View style={{ flex: 1, padding: 20, justifyContent: "center", gap: 15 }}>
 
-      <TextInput
-        placeholder="Email"
-        autoCapitalize="none"
-        value={email}
-        onChangeText={setEmail}
-        style={{ borderWidth: 1, padding: 12, borderRadius: 8 }}
-      />
+            {/* Welcome text */}
+            <Text
+                style={{
+                    fontSize: 34,
+                    fontWeight: "800",
+                    textAlign: "center",
+                    marginBottom: 10,
+                }}
+            >
+                Welcome to PAUL
+            </Text>
 
-      <TextInput
-        placeholder="Password"
-        secureTextEntry
-        value={password}
-        onChangeText={setPassword}
-        style={{ borderWidth: 1, padding: 12, borderRadius: 8 }}
-      />
+            {/* Login title */}
+            <Text
+                style={{
+                    fontSize: 28,
+                    fontWeight: "700",
+                    textAlign: "center",
+                    marginBottom: 10,
+                }}
+            >
+                Login
+            </Text>
 
-      {error ? <Text style={{ color: "red" }}>{error}</Text> : null}
+            <TextInput
+                placeholder="Email"
+                autoCapitalize="none"
+                keyboardType="email-address"
+                value={email}
+                onChangeText={setEmail}
+                style={{
+                    borderWidth: 1,
+                    borderColor: "#ccc",
+                    padding: 12,
+                    borderRadius: 8,
+                }}
+            />
 
-      <Pressable
-        onPress={login}
-        style={{
-          backgroundColor: "black",
-          padding: 15,
-          borderRadius: 10,
-          alignItems: "center",
-        }}
-      >
-        <Text style={{ color: "white", fontWeight: "700" }}>Login</Text>
-      </Pressable>
+            <TextInput
+                placeholder="Password"
+                secureTextEntry
+                value={password}
+                onChangeText={setPassword}
+                style={{
+                    borderWidth: 1,
+                    borderColor: "#ccc",
+                    padding: 12,
+                    borderRadius: 8,
+                }}
+            />
 
-      <Pressable onPress={() => router.push("/register")}>
-        <Text style={{ textAlign: "center" }}>Create Account</Text>
-      </Pressable>
-    </View>
-  );
+            {error ? (
+                <Text style={{ color: "red", textAlign: "center" }}>{error}</Text>
+            ) : null}
+
+            <Pressable
+                onPress={login}
+                style={{
+                    backgroundColor: "black",
+                    padding: 15,
+                    borderRadius: 10,
+                    alignItems: "center",
+                }}
+            >
+                <Text style={{ color: "white", fontWeight: "700" }}>Login</Text>
+            </Pressable>
+
+            <Pressable onPress={() => router.push("/register")}>
+                <Text style={{ textAlign: "center", color: "blue" }}>
+                    Create Account
+                </Text>
+            </Pressable>
+        </View>
+    );
 }

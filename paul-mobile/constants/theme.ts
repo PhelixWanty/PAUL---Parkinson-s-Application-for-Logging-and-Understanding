@@ -10,21 +10,21 @@ const tintColorDark = '#fff';
 
 export const Colors = {
   light: {
-    text: '#11181C',
-    background: '#fff',
-    tint: tintColorLight,
-    icon: '#687076',
-    tabIconDefault: '#687076',
-    tabIconSelected: tintColorLight,
+    text: '#0A1F2E',          // deep navy (better than black)
+    background: '#F4F8FB',    // soft light blue background
+    tint: '#0076B6',          // Honolulu Blue (MAIN brand color)
+    icon: '#6C7A86',          // muted blue-gray instead of dull gray
+    tabIconDefault: '#6C7A86',
+    tabIconSelected: '#0076B6', // active = Lions blue
   },
   dark: {
-    text: '#ECEDEE',
-    background: '#151718',
-    tint: tintColorDark,
-    icon: '#9BA1A6',
-    tabIconDefault: '#9BA1A6',
-    tabIconSelected: tintColorDark,
-  },
+    text: '#EAF4FA',          // soft white/blue (easy on eyes)
+    background: '#0A1F2E',    // deep navy (main background)
+    tint: '#0076B6',          // Honolulu Blue (primary)
+    icon: '#8FA3B0',          // muted blue-gray icons
+    tabIconDefault: '#8FA3B0',
+    tabIconSelected: '#4FC3F7', // brighter blue for active tabs
+  }
 };
 
 export const Fonts = Platform.select({
