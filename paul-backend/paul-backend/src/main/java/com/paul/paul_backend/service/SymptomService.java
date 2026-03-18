@@ -32,11 +32,12 @@ public class SymptomService {
 
         SymptomLog log = SymptomLog.builder()
                 .userId(userId)
-                .category(req.getCategory().trim())
-                .symptomName(req.getSymptomName().trim())
+                .category(req.getCategory())
+                .symptomName(req.getSymptomName())
                 .severity(req.getSeverity())
                 .durationMinutes(req.getDurationMinutes())
                 .note(req.getNote())
+                .feeling(req.getFeeling())
                 .createdAt(Instant.now())
                 .build();
 

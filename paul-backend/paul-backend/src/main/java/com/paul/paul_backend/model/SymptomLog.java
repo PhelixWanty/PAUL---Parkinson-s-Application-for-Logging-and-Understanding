@@ -30,4 +30,7 @@ public class SymptomLog {
     private String note;
 
     private Instant createdAt;
+
+    // ✅ NEW FIELD
+    private SymptomFeeling feeling; // GOOD, NEUTRAL, BAD
 }

@@ -23,4 +23,7 @@ public class User {
     private String password;
 
     private UserRole role;
+
+    @Indexed(unique = true) // ensures no duplicate codes
+    private String userCode;
 }
