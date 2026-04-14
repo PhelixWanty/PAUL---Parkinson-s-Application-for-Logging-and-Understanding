@@ -25,6 +25,7 @@ public class MedicationController {
     @GetMapping
     public List<Medication> list() {
         String userId = AuthUtil.currentUserId();
+        System.out.println("MedicationController current userId = " + userId);
         return medicationService.list(userId);
     }
 
@@ -41,8 +42,11 @@ public class MedicationController {
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable String id) {
+    public void delete(
+            @PathVariable String id,
+            @RequestParam(name = "deleteLogs", defaultValue = "false") boolean deleteLogs
+    ) {
         String userId = AuthUtil.currentUserId();
-        medicationService.delete(userId, id);
+        medicationService.delete(userId, id, deleteLogs);
     }
 }

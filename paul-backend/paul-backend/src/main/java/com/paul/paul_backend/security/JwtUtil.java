@@ -10,18 +10,18 @@ import java.util.Date;
 
 public class JwtUtil {
 
-    // MUST be at least 32 characters for HS256
+    // Must be at least 32 chars for HS256
     private static final String SECRET = "PAUL_SUPER_SECRET_KEY_32CHARS_MINIMUM!!";
-
     private static final long EXP_MS = 86400000; // 24 hours
 
     private static Key getSigningKey() {
         return Keys.hmacShaKeyFor(SECRET.getBytes(StandardCharsets.UTF_8));
     }
 
-    public static String generateToken(String email, String role) {
+    public static String generateToken(String userId, String email, String role) {
         return Jwts.builder()
-                .setSubject(email)
+                .setSubject(userId)      // store Mongo user id here
+                .claim("email", email)   // optional but helpful
                 .claim("role", role)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + EXP_MS))
@@ -39,15 +39,20 @@ public class JwtUtil {
 
     public static boolean isTokenValid(String token) {
         try {
-            Claims c = parseClaims(token);
-            return c.getExpiration().after(new Date());
+            Claims claims = parseClaims(token);
+            return claims.getExpiration().after(new Date());
         } catch (Exception e) {
             return false;
         }
     }
 
-    public static String extractEmail(String token) {
+    public static String extractUserId(String token) {
         return parseClaims(token).getSubject();
+    }
+
+    public static String extractEmail(String token) {
+        Object email = parseClaims(token).get("email");
+        return email == null ? null : email.toString();
     }
 
     public static String extractRole(String token) {

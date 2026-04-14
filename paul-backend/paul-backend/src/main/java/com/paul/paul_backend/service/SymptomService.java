@@ -47,4 +47,24 @@ public class SymptomService {
     public List<SymptomLog> list(String userId) {
         return repository.findByUserIdOrderByCreatedAtDesc(userId);
     }
+    public SymptomLog update(String userId, String id, SymptomLogRequest req) {
+        SymptomLog log = repository.findByIdAndUserId(id, userId)
+                .orElseThrow(() -> new RuntimeException("Symptom log not found"));
+
+        log.setCategory(req.getCategory());
+        log.setSymptomName(req.getSymptomName());
+        log.setSeverity(req.getSeverity());
+        log.setDurationMinutes(req.getDurationMinutes());
+        log.setFeeling(req.getFeeling());
+        log.setNote(req.getNote());
+
+        return repository.save(log);
+    }
+
+    public void delete(String userId, String id) {
+        SymptomLog log = repository.findByIdAndUserId(id, userId)
+                .orElseThrow(() -> new RuntimeException("Symptom log not found"));
+
+        repository.delete(log);
+    }
 }

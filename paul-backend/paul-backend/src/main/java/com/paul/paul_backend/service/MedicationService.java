@@ -13,6 +13,7 @@ import java.util.List;
 public class MedicationService {
 
     private final MedicationRepository medicationRepository;
+    private final MedicationLogService medicationLogService;
 
     public Medication create(String userId, MedicationRequest req) {
         Medication med = Medication.builder()
@@ -48,8 +49,13 @@ public class MedicationService {
         return medicationRepository.save(med);
     }
 
-    public void delete(String userId, String id) {
+    public void delete(String userId, String id, boolean deleteLogs) {
         Medication med = get(userId, id);
+
+        if (deleteLogs) {
+            medicationLogService.deleteLogsForMedication(userId, id);
+        }
+
         medicationRepository.delete(med);
     }
 }

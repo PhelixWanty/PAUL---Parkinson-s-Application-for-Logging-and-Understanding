@@ -27,4 +27,16 @@ public class SymptomController {
         String userId = AuthUtil.currentUserId();
         return symptomService.list(userId);
     }
+
+    @PutMapping("/{id}")
+    public SymptomLog update(@PathVariable String id, @RequestBody SymptomLogRequest req) {
+        String userId = AuthUtil.currentUserId();
+        return symptomService.update(userId, id, req);
+    }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable String id) {
+        String userId = AuthUtil.currentUserId();
+        symptomService.delete(userId, id);
+    }
 }

@@ -27,7 +27,6 @@ public class AuthController {
             User saved = authService.register(user);
             return ResponseEntity.ok(saved);
         } catch (IllegalArgumentException e) {
-            // JSON error response instead of plain text
             return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
         }
     }
@@ -37,20 +36,27 @@ public class AuthController {
         try {
             User user = authService.login(req.getEmail(), req.getPassword());
 
-            // Safety: if service returns null instead of throwing
             if (user == null) {
                 return ResponseEntity.status(401).body(Map.of("error", "Invalid email or password"));
             }
 
-            // ✅ If your JwtUtil currently only accepts ONE param, use the 1-param call:
-            // String token = JwtUtil.generateToken(user.getEmail());
+            String token = JwtUtil.generateToken(
+                    user.getId(),
+                    user.getEmail(),
+                    user.getRole().name()
+            );
 
-            // ✅ If your JwtUtil accepts 2 params (email + role), keep this:
-            String token = JwtUtil.generateToken(user.getEmail(), user.getRole().name());
-
-            return ResponseEntity.ok(new LoginResponse(token, user.getRole().name(), user.getEmail()));
+            return ResponseEntity.ok(
+                    new LoginResponse(
+                            token,
+                            user.getId(),
+                            user.getName(),
+                            user.getEmail(),
+                            user.getRole().name(),
+                            user.getUserCode()
+                    )
+            );
         } catch (IllegalArgumentException e) {
-            // JSON error response instead of plain text
             return ResponseEntity.status(401).body(Map.of("error", e.getMessage()));
         }
     }

@@ -4,8 +4,14 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 public class AuthUtil {
+
     public static String currentUserId() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        return auth != null ? auth.getName() : null; // usually email/username
+
+        if (auth == null || !auth.isAuthenticated() || "anonymousUser".equals(auth.getName())) {
+            throw new IllegalStateException("No authenticated user found");
+        }
+
+        return auth.getName(); // this is now the Mongo user id
     }
 }

@@ -7,4 +7,5 @@ import java.util.Optional;
 public interface UserRepository extends MongoRepository<User, String> {
     Optional<User> findByEmail(String email);
     Optional<User> findByUserCode(String userCode);
+    Optional<User> findById(String id);
 }
