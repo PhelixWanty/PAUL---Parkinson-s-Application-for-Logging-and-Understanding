@@ -1,0 +1,22 @@
+{
+  "expo": {
+    "extra": {
+      "EXPO_PUBLIC_API_URL": "http://192.168.1.50:8080"
+    }
+  }
+}
+{
+  "expo": {
+    "plugins": [
+      [
+        "expo-notifications",
+        {
+          "sounds": [
+            "./assets/sounds/reminder.wav",
+            "./assets/sounds/missed-dose.wav"
+          ]
+        }
+      ]
+    ]
+  }
+}
