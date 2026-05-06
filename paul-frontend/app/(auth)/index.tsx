@@ -1,22 +1,9 @@
 import { View, Text, TextInput, Pressable } from "react-native";
 import { useState } from "react";
 import { router } from "expo-router";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { apiFetch } from "../../lib/api";
-
-type UserRole = "PATIENT" | "CAREGIVER" | "CLINICIAN";
-
-function getDashboardRoute(role: "PATIENT" | "CAREGIVER" | "CLINICIAN") {
-    switch (role) {
-        case "CAREGIVER":
-            return "/(caregiverTabs)/dashboard";
-        case "CLINICIAN":
-            return "/(clinicianTabs)/dashboard";
-        case "PATIENT":
-        default:
-            return "/(patientTabs)/dashboard";
-    }
-}
+import { saveAuth } from "../../lib/authStorage";
+import { dashboardPathForRole, type UserRole } from "../../lib/routing";
 
 export default function Login() {
     const [email, setEmail] = useState("");
@@ -42,11 +29,13 @@ export default function Login() {
 
             const role: UserRole = data.role;
 
-            await AsyncStorage.setItem("token", data.token);
-            await AsyncStorage.setItem("email", data.email);
-            await AsyncStorage.setItem("role", role);
+            await saveAuth({
+                token: data.token,
+                email: data.email,
+                role,
+            });
 
-            router.replace(getDashboardRoute(role));
+            router.replace(dashboardPathForRole(role));
         } catch (e: any) {
             setError(e.message || "Login failed.");
         }

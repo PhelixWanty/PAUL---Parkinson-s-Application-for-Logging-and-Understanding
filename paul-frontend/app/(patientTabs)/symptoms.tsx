@@ -226,8 +226,6 @@ export default function SymptomsScreen() {
     return selectedCommon.trim();
   }, [category, selectedCommon, customName]);
 
-  const symptomLogs = useMemo(() => recent, [recent]);
-
   const reminderTracking = useMemo(
       () => activeTrackings.find((t) => t.id === reminderTrackingId) ?? null,
       [activeTrackings, reminderTrackingId]
@@ -1446,9 +1444,9 @@ export default function SymptomsScreen() {
             </View>
 
             {showSymptomLog ? (
-                symptomLogs.length ? (
+                recent.length ? (
                     <View style={styles.logsList}>
-                      {symptomLogs.map((r) => (
+                      {recent.map((r) => (
                           <View key={r.id} style={styles.logCard}>
                             <Text style={styles.logTitle}>
                               {r.symptomName} ({getCategoryLabel(r.category)})

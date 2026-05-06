@@ -2,8 +2,7 @@ import { View, Text, TextInput, Pressable } from "react-native";
 import { useState } from "react";
 import { router } from "expo-router";
 import { apiFetch } from "../../lib/api";
-
-type UserRole = "PATIENT" | "CAREGIVER" | "CLINICIAN";
+import { type UserRole } from "../../lib/routing";
 
 export default function Register() {
     const [name, setName] = useState("");
@@ -50,9 +49,9 @@ export default function Register() {
     }
 
     function RoleButton({
-                            label,
-                            value,
-                        }: {
+        label,
+        value,
+    }: {
         label: string;
         value: UserRole;
     }) {

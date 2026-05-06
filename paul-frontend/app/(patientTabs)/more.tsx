@@ -23,6 +23,12 @@ const items = [
         route: "/profile",
         subtitle: "View your account, password, and logout",
     },
+    {
+        label: "AI Assistant",
+        icon: "chatbubble-ellipses-outline",
+        route: "/ai-chat",
+        subtitle: "Ask questions and get instant guidance",
+    },
 ];
 
 export default function MoreScreen() {
